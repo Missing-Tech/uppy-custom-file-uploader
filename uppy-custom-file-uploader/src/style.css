@@ -1,8 +1,98 @@
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.chatbox {
+  margin: 0px auto;
+  border: 1px;
+  border-radius: 10px;
+  border-style: solid;
+  width: max-content;
+  padding: 2em;
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 5px;
+}
+
+.chatbox-input {
+  border: 0px;
+  height: 20px;
+}
+
+.chatbox-input:focus {
+  outline: none;
+}
+
+.upload, .send{
+  border: 1px solid #ccc;
+  width: max-content;
+  display: inline-block;
+  background-color: #fdfdfd;
+  font: 1em sans-serif;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.send {
+  background-color: rgb(67, 167, 167);
+  color: white;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.thumbnail-holder {
+  width: max-content;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: auto auto auto auto auto;
+  grid-template-rows: auto;
+  background-color: #eaeaea;
+  padding: 10px;
+  border-radius: 10px;
+  justify-content: center;
+  align-content: center;
+}
+
+.thumbnail-container {
+  width: 60px;
+  height: 60px;
+}
+
+.thumbnail-holder:empty {
+  background-color: transparent;
+}
+
+.thumbnail {
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+  width: 50px;
+  height: 50px;
+}
+
+.thumbnail-container:hover > .thumbnail {
+  opacity: .8; 
+}
+
+.thumbnail-container:hover > .close-thumbnail {
+  display: block;
+}
+
+.close-thumbnail {
+  /* Position */
+  position: relative;
+  top: -110%;
+  right: -60%;
+  z-index: 100;
+  /* Style */
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: bold;
+  background-color: #9a9a9a;
+  border: 3px solid #ffffff;
+  /* Makes the Button round */
+  border-radius: 50%;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-bottom: 3px;
+  padding-top: 5px;
+  display: none;
 }

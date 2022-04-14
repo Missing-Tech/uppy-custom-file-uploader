@@ -1,8 +1,7 @@
 import './style.css'
 
-const app = document.querySelector<HTMLDivElement>('#app')!
+import { addInputEventListener } from './upload-button'
+import { addSendEventListener } from './send-button';
 
-app.innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`
+addInputEventListener()
+addSendEventListener()
