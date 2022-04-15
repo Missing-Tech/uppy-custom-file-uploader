@@ -8,7 +8,7 @@ export function addSendEventListener() {
 function uploadFiles() {
   const thumbnails = document.querySelectorAll(".thumbnail-container");
 
-  upload();
+  upload()
 
   thumbnails.forEach((thumbnail) => {
     thumbnail.remove();

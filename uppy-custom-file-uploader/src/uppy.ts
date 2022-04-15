@@ -1,6 +1,7 @@
 import Uppy from "@uppy/core";
 import Tus from "@uppy/tus";
 import ThumbnailGenerator from "@uppy/thumbnail-generator";
+import { createMessage } from "./message";
 
 const uppy: Uppy = new Uppy();
 
@@ -23,6 +24,10 @@ export function getUppy() {
 export function upload() {
   uppy.upload().then((result) => {
     console.info("Successful uploads:", result.successful);
+
+    if(result.successful.length > 0){
+        createMessage(result.successful)
+    }
 
     if (result.failed.length > 0) {
       console.error("Errors:");

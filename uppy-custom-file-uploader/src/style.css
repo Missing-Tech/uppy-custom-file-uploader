@@ -1,13 +1,14 @@
-.chatbox {
-  margin: 0px auto;
+#container {
+  margin: 5px auto;
   border: 1px;
   border-radius: 10px;
   border-style: solid;
-  width: max-content;
+  width: 30%;
+  min-width: max-content;
   padding: 2em;
   display: grid;
   grid-auto-flow: row;
-  grid-row-gap: 5px;
+  grid-row-gap: 10px;
 }
 
 .chatbox-input {
@@ -17,6 +18,42 @@
 
 .chatbox-input:focus {
   outline: none;
+}
+
+#container:empty {
+  display: none;
+}
+
+.message {
+  border-radius: 20px;
+  width: max-content;
+  background-color: rgb(67, 167, 167);
+  font: 1em sans-serif;
+  color: white;
+  padding: 1em;
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 10px;
+}
+
+.message-image {
+  object-fit: cover;
+  border-radius: 20px;
+  width: 200px;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .upload, .send{
@@ -38,7 +75,8 @@ input[type="file"] {
   display: none;
 }
 
-.thumbnail-holder {
+.thumbnails-holder {
+  margin: 10px auto;
   width: max-content;
   display: grid;
   grid-auto-flow: row;
@@ -47,8 +85,6 @@ input[type="file"] {
   background-color: #eaeaea;
   padding: 10px;
   border-radius: 10px;
-  justify-content: center;
-  align-content: center;
 }
 
 .thumbnail-container {
@@ -56,8 +92,8 @@ input[type="file"] {
   height: 60px;
 }
 
-.thumbnail-holder:empty {
-  background-color: transparent;
+.thumbnails-holder:empty {
+  display: none;
 }
 
 .thumbnail {
@@ -74,21 +110,19 @@ input[type="file"] {
 
 .thumbnail-container:hover > .close-thumbnail {
   display: block;
+  cursor: pointer;
 }
 
 .close-thumbnail {
-  /* Position */
   position: relative;
   top: -110%;
   right: -60%;
   z-index: 100;
-  /* Style */
   color: #ffffff;
   font-size: 10px;
   font-weight: bold;
   background-color: #9a9a9a;
   border: 3px solid #ffffff;
-  /* Makes the Button round */
   border-radius: 50%;
   padding-left: 7px;
   padding-right: 7px;

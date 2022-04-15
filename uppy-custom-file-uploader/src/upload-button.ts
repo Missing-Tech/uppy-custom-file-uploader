@@ -10,24 +10,22 @@ export function addInputEventListener() {
 }
 
 function addThumbnail(file: any, preview: string) {
-  const thumbnailContainer = document.createElement("span");
-  const img = document.createElement("img");
+  const thumbnailContainer = document.createElement("div");
+  thumbnailContainer.className = "thumbnail-container";
+
   const closeButton = document.createElement("button");
-
-  thumbnailContainer.className = "thumbnail-container";
-  thumbnailContainer.className = "thumbnail-container";
-
   closeButton.textContent = "X";
   closeButton.className = "close-thumbnail";
   closeButton.addEventListener("click", removeFile);
   closeButton.id = file.id;
 
+  const img = document.createElement("img");
   img.className = "thumbnail";
   img.src = preview;
 
   thumbnailContainer.appendChild(img);
   thumbnailContainer.appendChild(closeButton);
-  document.querySelector(".thumbnail-holder")?.appendChild(thumbnailContainer);
+  document.querySelector(".thumbnails-holder")?.appendChild(thumbnailContainer);
 }
 
 function removeFile(e: Event) {
