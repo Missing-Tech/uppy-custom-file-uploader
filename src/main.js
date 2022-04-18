@@ -26,7 +26,6 @@ uppy.use(ThumbnailGenerator, {
 uppy.on("thumbnail:generated", (file, preview) => addThumbnail(file, preview));
 
 function upload() {
-  uploadedFiles = [];
   uppy.upload().then((result) => {
     console.info("Successful uploads:", result.successful);
 
@@ -52,16 +51,18 @@ function createMessages() {
   message.textContent = textInput.value;
 
   textInput.value = "";
+  console.log(uploadedFiles);
+  if (uploadedFiles.length > 0) {
+    uploadedFiles.forEach((file) => {
+      const image = document.createElement("img");
+      image.className = "message-image";
+      image.src = file.preview;
+      message.appendChild(image);
+    });
 
-  uploadedFiles.forEach((file) => {
-    const image = document.createElement("img");
-    image.className = "message-image";
-    image.src = file.preview;
-
-    message.appendChild(image);
-  });
-
-  messageContainer.appendChild(message);
+    uploadedFiles = [];
+    messageContainer.appendChild(message);
+  }
 }
 
 function uploadFiles() {
@@ -72,6 +73,8 @@ function uploadFiles() {
   thumbnails.forEach((thumbnail) => {
     thumbnail.remove();
   });
+
+  uppy.reset();
 }
 
 function addThumbnail(file, preview) {
@@ -91,7 +94,6 @@ function addThumbnail(file, preview) {
   thumbnailContainer.appendChild(img);
   thumbnailContainer.appendChild(closeButton);
   document.querySelector(".thumbnails-holder").appendChild(thumbnailContainer);
-  uppy.removeFile(file);
 }
 
 function removeFile(e) {
@@ -123,5 +125,6 @@ function previewFiles() {
       }
     }
     upload();
+    //uppy.reset();
   }
 }
