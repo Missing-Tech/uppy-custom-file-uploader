@@ -8,8 +8,8 @@ var uploadedFiles = [];
 
 const fileUpload = document.getElementById("file-upload");
 const sendButton = document.querySelector(".send");
-fileUpload.addEventListener("change", previewFiles);
-sendButton.addEventListener("click", uploadFiles);
+fileUpload.addEventListener("change", selectFiles);
+sendButton.addEventListener("click", sendFiles);
 
 uppy.use(Tus, {
   endpoint: "https://tusd.tusdemo.net/files/"
@@ -20,11 +20,12 @@ uppy.use(ThumbnailGenerator, {
   thumbnailWidth: 200,
   thumbnailHeight: 200,
   thumbnailType: "image/jpeg",
-  waitForThumbnailsBeforeUpload: false
+  waitForThumbnailsBeforeUpload: true
 });
 
 uppy.on("thumbnail:generated", (file, preview) => addThumbnail(file, preview));
 
+// Uplaods all files currently selected
 function upload() {
   uppy.upload().then((result) => {
     console.info("Successful uploads:", result.successful);
@@ -39,6 +40,7 @@ function upload() {
         console.error(file.error);
       });
     }
+    
   });
 }
 
@@ -51,7 +53,8 @@ function createMessages() {
   message.textContent = textInput.value;
 
   textInput.value = "";
-  console.log(uploadedFiles);
+
+  // Creates a chat buble containing every image uploaded, and a small message if the user included one
   if (uploadedFiles.length > 0) {
     uploadedFiles.forEach((file) => {
       const image = document.createElement("img");
@@ -65,7 +68,8 @@ function createMessages() {
   }
 }
 
-function uploadFiles() {
+// Called when the user clicks "send", removes all thumbnails + resets Uppy
+function sendFiles() {
   const thumbnails = document.querySelectorAll(".thumbnail-container");
 
   createMessages();
@@ -74,13 +78,14 @@ function uploadFiles() {
     thumbnail.remove();
   });
 
-  uppy.reset();
+  uppy.reset()
 }
 
 function addThumbnail(file, preview) {
   const thumbnailContainer = document.createElement("div");
   thumbnailContainer.className = "thumbnail-container";
 
+  // Creates a small thumbnail element with a removal button when you hover over it
   const closeButton = document.createElement("button");
   closeButton.textContent = "X";
   closeButton.className = "close-thumbnail";
@@ -99,11 +104,23 @@ function addThumbnail(file, preview) {
 function removeFile(e) {
   const target = e.target;
   document.getElementById(target.id).parentElement.remove();
-  uppy.removeFile(target.id);
+
+  // Creates a new array without the element you're removing
+  const newUploadedFiles = []
+  for (let i = 0; i < uploadedFiles.length; i++) {
+    const uploadedFile = uploadedFiles[i];
+    if(uploadedFile.id != target.id){
+      newUploadedFiles.push(uploadedFile)
+    }
+  }
+
+  uploadedFiles = newUploadedFiles
 }
 
-function previewFiles() {
+function selectFiles() {
   const files = fileUpload.files;
+
+  // Add files from file input to Uppy to be uploaded
   if (files != null) {
     for (var i = 0; i < files.length; i++) {
       var file = files.item(i);
@@ -124,7 +141,6 @@ function previewFiles() {
         }
       }
     }
-    upload();
-    //uppy.reset();
   }
+  upload();
 }
